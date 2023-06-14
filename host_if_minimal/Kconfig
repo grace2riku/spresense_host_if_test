@@ -1,0 +1,69 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config EXAMPLES_HOSTIF_MINIMAL
+	tristate "Minimal Host Interface example"
+	default n
+	depends on CXD56_HOSTIF
+	---help---
+		Enable the Host Interface example application with I2C and SPI slave
+		communication. It supports to communicate with a host device which
+		has the I2C or SPI master function.
+
+if EXAMPLES_HOSTIF_MINIMAL
+
+config EXAMPLES_HOSTIF_MINIMAL_PROGNAME
+	string "Program name"
+	default "hostif_minimal"
+	---help---
+		This is the name of the program that will be use when the NSH ELF
+		program is installed.
+
+config EXAMPLES_HOSTIF_MINIMAL_PRIORITY
+	int "hostif task priority"
+	default 100
+
+config EXAMPLES_HOSTIF_MINIMAL_STACKSIZE
+	int "hostif stack size"
+	default 2048
+
+choice
+	prompt "HostIF peripheral"
+	default EXAMPLES_HOSTIF_MINIMAL_SPI
+
+config EXAMPLES_HOSTIF_MINIMAL_SPI
+	bool "SPI"
+
+endchoice
+
+
+config EXAMPLES_HOSTIF_MINIMAL_HOST_SPI
+	bool "Minimal Test Host SPI example"
+	depends on EXAMPLES_HOSTIF_MINIMAL && EXAMPLES_HOSTIF_MINIMAL_SPI
+	default n
+	---help---
+		Enable the example application for the host to communicate with the
+		device which has the host interface of SPI.
+
+if EXAMPLES_HOSTIF_MINIMAL_HOST_SPI
+
+config EXAMPLES_HOSTIF_MINIMAL_HOST_SPI_PROGNAME
+	string "Program name"
+	default "host_spi_minimal"
+	---help---
+		This is the name of the program that will be use when the NSH ELF
+		program is installed.
+
+config EXAMPLES_HOSTIF_MINIMAL_HOST_SPI_PRIORITY
+	int "host_spi task priority"
+	default 100
+
+config EXAMPLES_HOSTIF_MINIMAL_HOST_SPI_STACKSIZE
+	int "host_spi stack size"
+	default 2048
+
+endif # EXAMPLES_HOSTIF_MINIMAL_HOST_SPI
+
+endif # EXAMPLES_HOSTIF_MINIMAL
