@@ -165,6 +165,9 @@ static void *hostif_loopback(void *arg)
         }
     }
 
+  close(rfd);
+  close(wfd);
+
   return NULL;
 }
 
@@ -240,6 +243,9 @@ static void *hostif_updater(void *arg)
       sleep(1);
     }
 #endif
+
+  close(wfd3);
+  close(wfd2);
 
   return NULL;
 }
